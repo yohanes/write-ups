@@ -1,4 +1,4 @@
-# Ill Intentions
+# Ill Intentions (150 pts)
 
 We are given an APK file, the challenge has the following message:
 
