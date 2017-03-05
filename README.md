@@ -7,3 +7,4 @@ Current write-up:
 
 * [Flare On 2015](flare-2015)
 * [Google CTF 2016](google-ctf)
+* [RHME 2 (Nov 2016 - Feb 2017)](rhme2)
