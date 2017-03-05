@@ -46,18 +46,18 @@ In desktop app, we will usually find basic calls to `printf` or `getc` as our st
 
 From the documentation to read or write to serial port we will need to access USART I/O Data Register 0 (UDR0). This is located at offset `C6`. Here is a piece of code that reads `C6` (from [Jumpy](jumpy)) challenge:
 
-   2ba:   86 ec           ldi     r24, 0xC6       ; 198
-   2bc:   90 e0           ldi     r25, 0x00       ; 0
-   2be:   fc 01           movw    r30, r24
-   2c0:   80 81           ld      r24, Z
+    2ba:   86 ec           ldi     r24, 0xC6       ; 198
+    2bc:   90 e0           ldi     r25, 0x00       ; 0
+    2be:   fc 01           movw    r30, r24
+    2c0:   80 81           ld      r24, Z
 
 And a piece of code that writes to `C6`
 
-   ea:   86 ec           ldi     r24, 0xC6       ; 198
-   ec:   90 e0           ldi     r25, 0x00       ; 0
-   ee:   29 81           ldd     r18, Y+1        ; 0x01
-   f0:   fc 01           movw    r30, r24
-   f2:   20 83           st      Z, r18
+    ea:   86 ec           ldi     r24, 0xC6       ; 198
+    ec:   90 e0           ldi     r25, 0x00       ; 0
+    ee:   29 81           ldd     r18, Y+1        ; 0x01
+    f0:   fc 01           movw    r30, r24
+    f2:   20 83           st      Z, r18
 
 After we identify the basic instructions, we will see that calls to this functions are passed with strange address, which doesn't seem to contain printable ASCII characters. We need to go to the initial instructions, to see that there is a copy instruction from ROM to RAM. This is mostly done for simplicity reason: AVR uses separate data and instruction bus, and also has different address space for data and program. To make it easy for compiler, data are moved to RAM for easy access.
 
