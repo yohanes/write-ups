@@ -32,9 +32,12 @@ I made several trial to see how the hash works, for example, can I send `cat.txt
 
 I used the default (automatic guessing) feature of hashpump to guess the hash type
 
-    a, b = hashpumpy.hashpump("96103df3b928d9edc5a103d690639c94628824f5", "cat.txt", ":passwd:pepper", 8)
-    r = a+"#"+b
-    request(r+"\r\n")
+
+```python
+a, b = hashpumpy.hashpump("96103df3b928d9edc5a103d690639c94628824f5", "cat.txt", ":passwd:pepper", 8)
+r = a+"#"+b
+request(r+"\r\n")
+```
 
 The `passwd` file contains the FLAG, the `pepper` file content is `Notasalt`
 
