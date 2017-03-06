@@ -59,7 +59,7 @@ And a piece of code that writes to `C6`
     f0:   fc 01           movw    r30, r24
     f2:   20 83           st      Z, r18
 
-After we identify the basic instructions, we will see that calls to this functions are passed with strange address, which doesn't seem to contain printable ASCII characters. We need to go to the initial instructions, to see that there is a copy instruction from ROM to RAM. This is mostly done for simplicity reason: AVR uses separate data and instruction bus, and also has different address space for data and program. To make it easy for compiler, data are moved to RAM for easy access.
+After we identify the basic instructions, we will see that calls to this functions are passed with strange address, which doesn't seem to contain printable ASCII characters. We need to go to the initial instructions, to see that there is a copy instruction from Flash to RAM. This is mostly done for simplicity reason: AVR uses separate data and instruction bus, and also has different address space for data and program. To make it easy for compiler, data are moved to RAM for easy access.
 
 
 ## Solved Tasks
