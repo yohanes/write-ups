@@ -11,10 +11,10 @@ Can you find the correct password and get the secret data stored on the device?
 
 At first I was quite sure that this will involve SPI, because of the word "spies" and also "secret sauce" (SS = slave select in SPI). But I was wrong, this has nothing to do with SPI, but this is just a timing attack. The challenge asks for a password:
 
-  Welcome to Secure Encryption System(SES)!
-  Authentication step.
-  Input provided secret password.
-  If you lost your password call the customer service. >
+    Welcome to Secure Encryption System(SES)!
+    Authentication step.
+    Input provided secret password.
+    If you lost your password call the customer service. >
 
 I always used the same algorithm when brute forcing the challenges:
 
@@ -24,17 +24,17 @@ I always used the same algorithm when brute forcing the challenges:
 While doing this, I recorded the time by dumping the request/response using sigrok. The timing changes slightly when the length is 15 characters. So I started to do timing attack, and the result is: `TImInG@ttAkw0rk`. I was a bit disappointed that it opens up a new challenge.
 
 
-  Password is correct!
-  ************************************************
-  Authentication complete. Welcome to the system!
-  Now you can encrypt messages up to 32 bytes.
-  Input data to encrypt:
+    Password is correct!
+    ************************************************
+    Authentication complete. Welcome to the system!
+    Now you can encrypt messages up to 32 bytes.
+    Input data to encrypt:
 
 Entering something shows something about true random nonce. 
-
-  True Random Nonce: 0b72680fa33d76ac9c03a0573de6e4c3
-  Encryption:     04d462e17f2d7edc64bc872f886edd64dde278b2b253d87faf4252229c9ed882
-  Input data to encrypt:
+ 
+    True Random Nonce: 0b72680fa33d76ac9c03a0573de6e4c3
+    Encryption:     04d462e17f2d7edc64bc872f886edd64dde278b2b253d87faf4252229c9ed882
+    Input data to encrypt:
 
 
 Since reading the solution of last year challenges, I always try to put all analog PINS to ground everytime I found a random number generator. Having done that, I got a fixed nonce. I did several experiments:
@@ -48,7 +48,5 @@ Since reading the solution of last year challenges, I always try to put all anal
 It seems that the output is: encryption of blank ^ plaintext ^ something
 
 I still don't understand what or how the flag will show up, but I made a guess: may be "something" is the flag, so by doing input ^ ouput ^ encryption of blank, I got the flag.
-
-
 
 
