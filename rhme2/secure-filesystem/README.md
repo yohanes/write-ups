@@ -30,7 +30,7 @@ Can you access any file you're not supposed to?
 
 I made several trial to see how the hash works, for example, can I send `cat.txt:cat.txt` with the same hash as `cat.txt`? it turns out we can't. Does adding `:` at the end invalidates the hash? yes. It means that the right side is not parsed then hashed, it is hashed entirely and compared to the left side. The first attack that I could think of is [Length extension attack](https://en.wikipedia.org/wiki/Length_extension_attack), I used [HashPump](https://github.com/bwall/HashPump) using Python API.
 
-I used the default (automatic guessing) feature of hashpump to guess the hash type
+I used the default (automatic guessing) feature of hashpump to guess the hash type, and just bruteforced the length, fortunately its a small number (8).
 
 
 ```python

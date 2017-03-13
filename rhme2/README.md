@@ -24,21 +24,36 @@ Documentations
 As for the hardware:
 
 * My own arduino nano for testing
-* cypress development board as logic analyzer
+* cypress development board as logic analyzer (CY7C68013A)
 
 ### Setup
 
-The purpose of my setup was so I could solve the challenges remotely. So I plugged the RHME Arduino Nano to my Raspberry Pi 2 (RPI2). During some challenges I attached another Nano for testing some undocumented behavior (e.g: what happens if you try to read past the flash size? would it wrap around?). During other challenges, I attached the cypress logic analyzer
+The purpose of my setup was so I could solve the challenges remotely. So I plugged the RHME Arduino Nano to my Raspberry Pi 2 (RPI2). During some challenges I attached another Nano for testing some undocumented behavior (e.g: what happens if you try to read past the flash size? would it wrap around?). During other challenges, I attached the cypress logic analyzer with sigrok-cli to access it.
 
-It turns out its quite useful: once in a while we can't reprogram the board unless we replug it, using  RPI2, I can just shutdown the USB power and start it again. If that didn't work, I just rebooted the RPI2 remotely.
+It turns out this setup quite useful: once in a while we can't reprogram the board unless we replug it, using  RPI2, I can just shutdown the USB power and start it again. If that didn't work, I just rebooted the RPI2 remotely.
 
 ### Tools notes
 
-Except for Reversing challenges, we are given only *encrypted* hex files which we can not reverse. For the reversing tasks we are also given the corresponding ELF file. When we are given an ELF file, we can convert it into hex so we can write it to our own arduino:
+Except for Reversing challenges, we are given only *encrypted* hex files which we can not reverse. For the reversing tasks we are also given the corresponding ELF file. When we are given an ELF file, we can convert it into hex so we can write it to our own arduino. Here are some useful commands
 
-     avr-objcopy
 
-Unfortunately for the impostor challenge, there is a jump to the bootloader that makes it not possible to run the code in our own Arduino.
+Convert ELF to HEX
+
+   objcopy -O ihex input.elf output.hex
+
+Disassemble ELF:
+
+   avr-objdump -d -s file.elf
+
+
+Unfortunately for the FridgeJIT challenge, there is a jump to the bootloader that makes it not possible to run the code in our own Arduino.
+
+
+## Logic Analyzer notes
+
+I used  [EZ-USB FX2LP CY7C68013A development board ](https://www.aliexpress.com/item/Free-ship-IEZ-USB-FX2LP-CY7C68013A-USB-core-board-development-board-USB-logic-analyzer-I2C-serial/976713163.html) with sigrok. The price for the board is less than 5 USD (including shipping). If you never used Aliexpress before, you can use [this link](http://s.aliexpress.com/26JfMJ7J) to get 5 USD coupon that can be used for minimum 6 USD purchase (so if you buy something for 6 USD, you only need to pay 1 USD).
+
+To use this board, connect PB0-PB7 and PD0-PD7 for 16-channel sampling. I did not use any protection circuit when connecting this to Arduino board, but you [may need them](https://sigrok.org/wiki/Circuits_for_barebone_boards) when connecting this board to other circuits.
 
 ### Reversing Notes
 
@@ -59,7 +74,7 @@ And a piece of code that writes to `C6`
     f0:   fc 01           movw    r30, r24
     f2:   20 83           st      Z, r18
 
-After we identify the basic instructions, we will see that calls to this functions are passed with strange address, which doesn't seem to contain printable ASCII characters. We need to go to the initial instructions, to see that there is a copy instruction from Flash to RAM. This is mostly done for simplicity reason: AVR uses separate data and instruction bus, and also has different address space for data and program. To make it easy for compiler, data are moved to RAM for easy access.
+After we identify the basic instructions, we will see that calls to this functions are passed with strange address, which doesn't seem to contain printable ASCII characters. We need to go to the initial instructions, to see that there is a copy instruction from Flash to RAM. This is mostly done for simplicity reason: AVR uses separate data and instruction bus, and also has different address space for data and program. To make it easy for compiler, data are moved to RAM for easy access.  This part confuses me a bit at the beginning, which makes me switch from radare to vim, since the binary is small enough, and I can just copy paste and relabel the RAM addresses.
 
 
 ## Solved Tasks
@@ -74,7 +89,7 @@ I solved all the reversing tasks as it doesn't require any special hardware.
 
 ### Exploitation
 
-The exploitation tasks are a bit disappointing, mostly trial and error to exploit format string bugs, except for the Weird Machine.
+Most of the exploitation tasks are a bit disappointing, mostly trial and error to exploit format string bugs, except for the Weird Machine.
 
 * [Animals](animals)
 * [Casino](casino)
@@ -93,4 +108,5 @@ Crypto tasks requires intelligent guessing
 
 * [Whac the mole](whack-the-mole)
 * [Secret Sauce](secret-sauce)
+* [Hide & seek] (hide-and-seek)
 
