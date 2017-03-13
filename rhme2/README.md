@@ -106,7 +106,7 @@ Crypto tasks requires intelligent guessing
 
 ### Others
 
-* [Whac the mole](whack-the-mole)
+* [Whac the mole](whac-the-mole)
 * [Secret Sauce](secret-sauce)
 * [Hide & seek] (hide-and-seek)
 
